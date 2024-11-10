@@ -66,13 +66,35 @@ int main(void){
     //BTN_print_main_info(btn_result);
 
 
-    int l = 10;
+    int l = 13;
 
     //printf("%d",*BTN_get_data_type(btn1));
 
     BinaryTreeNode *bts = BT_get_node(&bt , &l);
 
     BTN_print_main_info(bts);
+
+    printf("\n %d \n",BT_get_node_level(&bt,bts));
+
+    /*printf("Preorder: \n");
+
+    BT_print_preorder(&bt);
+
+    printf("Inorder: \n");
+
+    BT_print_inorder(&bt);
+
+    printf("Postorder: \n");
+
+    BT_print_postorder(&bt);*/
+
+    printf("%d\n",BT_get_total_nodes(&bt));
+
+
+    BinaryTreeNode **sons = BT_get_sons(btn2);
+    BTN_print_main_info(sons[0]);
+    BTN_print_main_info(sons[1]);
+    BT_free_sons(sons);
 
     return 0;
 }
