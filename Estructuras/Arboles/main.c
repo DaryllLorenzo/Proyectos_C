@@ -61,11 +61,18 @@ int main(void){
 
     BinaryTree bt = BT_create(btn1);
 
-    BinaryTreeNode *btn_result = BT_get_father(&bt, btn13);
+    //BinaryTreeNode *btn_result = BT_get_father(&bt, btn11);
 
-    BTN_print_main_info(btn_result);
+    //BTN_print_main_info(btn_result);
 
-    //BTN_print_main_info(bt.root);
+
+    int l = 10;
+
+    //printf("%d",*BTN_get_data_type(btn1));
+
+    BinaryTreeNode *bts = BT_get_node(&bt , &l);
+
+    BTN_print_main_info(bts);
 
     return 0;
 }

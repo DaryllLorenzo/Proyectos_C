@@ -12,6 +12,9 @@ BinaryTree BT_create(BinaryTreeNode *root);
 
 BinaryTreeNode *BT_get_father(BinaryTree *tree, BinaryTreeNode *node);
 
+BinaryTreeNode *BT_get_node(BinaryTree *tree, void *data);
+
+
 //BT_get_node_level
 
 #endif

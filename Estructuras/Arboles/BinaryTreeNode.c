@@ -197,4 +197,24 @@ BinaryTreeNode *BTN_get_right(BinaryTreeNode *node){
     return node->right;
 }
 
+/**
+ * @brief BTN_get_data_type
+ * @param node
+ * @return data type of the node
+ */
+DataTypes *BTN_get_data_type(BinaryTreeNode *node){
+    return &node->dataType;
+}
+
+
+/**
+ * @brief BTN_get_data
+ * @param node
+ * @return
+ */
+
+void *BTN_get_data(BinaryTreeNode *node){
+
+    return node->main;
+}
 
