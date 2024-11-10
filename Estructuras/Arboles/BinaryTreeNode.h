@@ -18,6 +18,4 @@ BinaryTreeNode *BTN_get_right(BinaryTreeNode *node);
 DataTypes *BTN_get_data_type(BinaryTreeNode *node);
 void *BTN_get_data(BinaryTreeNode *node);
 
-// Faltan "getters y setters"
-
 #endif
