@@ -18,4 +18,9 @@ void BT_print_postorder(BinaryTree *tree); // I-D-N
 BinaryTreeNode **BT_get_sons(BinaryTreeNode *node);
 void BT_free_sons(BinaryTreeNode **sons); // liberar sons, siempre que haya un get_sons debe haber un free_sons
 
+int BT_get_total_leaves(BinaryTree *tree);
+static void _Get_leaves_recursive(BinaryTree *tree, BinaryTreeNode **leaves, int *iter);
+BinaryTreeNode **BT_get_leaves(BinaryTree *tree);
+void BT_free_leaves(BinaryTreeNode **leaves);
+
 #endif

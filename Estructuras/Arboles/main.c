@@ -96,5 +96,20 @@ int main(void){
     BTN_print_main_info(sons[1]);
     BT_free_sons(sons);
 
+    int total_leaves = BT_get_total_leaves(&bt);
+    printf("%d\n", total_leaves);
+
+    printf("\n");
+
+    BinaryTreeNode **leaves = BT_get_leaves(&bt);
+
+    int i = 0;
+
+    for(i = 0; i<total_leaves; i++){
+        BTN_print_main_info(leaves[i]);
+    }
+
+    BT_free_leaves(leaves);
+
     return 0;
 }

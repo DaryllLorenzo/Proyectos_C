@@ -6,7 +6,11 @@ typedef struct BinaryTree{
     BinaryTreeNode *root;
 }BinaryTree;
 
-
+/**
+ * @brief BT_create
+ * @param root
+ * @return Arbol binario
+ */
 BinaryTree BT_create(BinaryTreeNode *root){
     BinaryTree BT;
 
@@ -38,7 +42,12 @@ int BT_get_node_level(BinaryTree *tree, BinaryTreeNode *node){
     return -1; // el nodo no existe y devolvemos -1 para confirmarlo
 }
 
-
+/**
+ * @brief BT_get_node
+ * @param tree
+ * @param data
+ * @return El nodo a partir de un valor dado (caso de que la info de los nodos sea unica)
+ */
 BinaryTreeNode *BT_get_node(BinaryTree *tree, void *data){
 
     if (tree->root == NULL){
@@ -119,7 +128,12 @@ BinaryTreeNode *BT_get_node(BinaryTree *tree, void *data){
 
 }
 
-
+/**
+ * @brief BT_get_father
+ * @param tree
+ * @param node
+ * @return el padre de un nodo dado
+ */
 BinaryTreeNode *BT_get_father(BinaryTree *tree, BinaryTreeNode *node) {
     // Caso de que algo sea NULL
     if (tree == NULL || tree->root == NULL || node == NULL) {
@@ -231,7 +245,7 @@ BinaryTreeNode **BT_get_sons(BinaryTreeNode *node){
         return NULL;
     }
     // Asignar memoria para el arreglo de hijos en heap, recordar que cuando se termine de utilizar hay que liberarlo
-    BinaryTreeNode **sons = (BinaryTreeNode **)calloc(num_sons,sizeof(BinaryTreeNode));
+    BinaryTreeNode **sons = (BinaryTreeNode **)calloc(num_sons, sizeof(BinaryTreeNode *));
 
     if(sons == NULL){
         printf("\n !! Error asignacion de memoria get_sons\n");
@@ -259,5 +273,81 @@ BinaryTreeNode **BT_get_sons(BinaryTreeNode *node){
 void BT_free_sons(BinaryTreeNode **sons){
     if (sons != NULL) {
         free(sons);
+    }
+}
+
+/**
+ * @brief BT_get_total_leaves
+ * @param tree
+ * @return total count of leaves
+ */
+int BT_get_total_leaves(BinaryTree *tree){
+    int num_leaves = 0;
+
+    if(tree->root != NULL){
+
+        if(BTN_get_left(tree->root) == NULL && BTN_get_right(tree->root) == NULL){
+            num_leaves++;
+        }
+        BinaryTree temp = BT_create(BTN_get_left(tree->root));
+        num_leaves+=BT_get_total_leaves(&temp);
+        temp.root = BTN_get_right(tree->root);
+        num_leaves+=BT_get_total_leaves(&temp);
+    }
+
+    return num_leaves;
+}
+
+/**
+ * @brief _Get_leaves_recursive
+ * @param tree
+ * @param leaves
+ * @param iter
+ *
+ * Funcion "privada" solo para llenar el array de hojas
+ */
+static void _Get_leaves_recursive(BinaryTree *tree, BinaryTreeNode **leaves, int *iter){
+
+    if(tree->root != NULL){
+        if(BTN_get_left(tree->root) == NULL && BTN_get_right(tree->root) == NULL ){
+            leaves[*iter] = tree->root;
+            (*iter)++;
+        }
+        BinaryTree temp = BT_create(BTN_get_left(tree->root));
+        _Get_leaves_recursive(&temp, leaves, iter);
+        temp.root = BTN_get_right(tree->root);
+        _Get_leaves_recursive(&temp, leaves, iter);
+    }
+}
+
+/**
+ * @brief BT_get_leaves
+ * @param tree
+ * @return arreglo de hojas
+ */
+BinaryTreeNode **BT_get_leaves(BinaryTree *tree){
+    int total_leaves = BT_get_total_leaves(tree);
+    BinaryTreeNode **leaves = (BinaryTreeNode **)calloc(total_leaves, sizeof(BinaryTreeNode *));
+
+    if(leaves == NULL){
+        printf("\n !! Error asignacion de memoria get_sons\n");
+        exit(1);
+    }
+    int i = 0;
+
+    _Get_leaves_recursive(tree, leaves, &i);
+
+    return leaves;
+}
+
+/**
+ * @brief BT_free_leaves
+ * @param leaves
+ * Para liberar el espacio utilizado por el arreglo de hojas
+ * Siempre que haya un get_leaves debe haber un free_leaves
+ */
+void BT_free_leaves(BinaryTreeNode **leaves){
+    if(leaves != NULL){
+        free(leaves);
     }
 }
