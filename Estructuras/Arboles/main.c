@@ -110,6 +110,18 @@ int main(void){
     }
 
     BT_free_leaves(leaves);
+    printf("\n\n");
+
+
+    // Prueba de insertar
+    int testinf = 88;
+
+    BinaryTreeNode *btn14 = BTN_create(NODE_INT);
+    BTN_set_main_info(btn14 , &testinf);
+
+    BT_insert_node(&bt,btn14,'l',NULL);
+
+    BT_print_preorder(&bt);
 
     return 0;
 }

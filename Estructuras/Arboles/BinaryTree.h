@@ -22,5 +22,7 @@ int BT_get_total_leaves(BinaryTree *tree);
 static void _Get_leaves_recursive(BinaryTree *tree, BinaryTreeNode **leaves, int *iter);
 BinaryTreeNode **BT_get_leaves(BinaryTree *tree);
 void BT_free_leaves(BinaryTreeNode **leaves);
+void BT_insert_node(BinaryTree *tree, BinaryTreeNode *node, char location, BinaryTreeNode *father);
+static int _Find_node(BinaryTree *tree, BinaryTreeNode *node);
 
 #endif

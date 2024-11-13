@@ -351,3 +351,110 @@ void BT_free_leaves(BinaryTreeNode **leaves){
         free(leaves);
     }
 }
+
+
+/**
+ * @brief _Find_node
+ * @param tree
+ * @param node
+ * @return 1 si el nodo existe, 0 si no existe
+ */
+static int _Find_node(BinaryTree *tree, BinaryTreeNode *node){
+
+    if(node == NULL){
+        return 0;
+    }
+
+    if (tree->root == node) {
+    return 1; // El nodo es la raíz
+  }
+
+  if (tree->root != NULL) {
+    BinaryTree bt = BT_create(BTN_get_left(tree->root));
+    if (_Find_node(&bt, node) == 1) {
+      return 1; // Nodo encontrado en el subárbol izquierdo
+    }
+    bt.root = BTN_get_right(tree->root);
+    if (_Find_node(&bt, node) == 1) {
+      return 1; // Nodo encontrado en el subárbol derecho
+    }
+  }
+
+  return 0; // Nodo no encontrado
+}
+
+/**
+ * @brief BT_insert_node
+ * @param tree
+ * @param node
+ * @param location
+ * @param father
+ *
+ * Insertar nodo en el arbol, si el padre es NULL o el padre no existe, se asigna como root el nodo,
+ * y la antigua raiz se le pone como hijo en base a la localizacion 'r' o 'l'
+ *
+ * Si el padre existe se agrega como hijo el nodo en base a la localizacion,
+ * y el antiguo hijo se agrega como hijo del nuevo nodo a partir de la misma localizacion
+ *
+ */
+void BT_insert_node(BinaryTree *tree, BinaryTreeNode *node, char location, BinaryTreeNode *father){
+
+    if(node != NULL){
+
+        int father_exist = 0; // 0 false - 1 true
+
+        father_exist = _Find_node(tree , father);
+
+        // caso de que si exista el padre
+        if(father_exist == 1){
+
+            if(location == 'r' || location == 'R'){
+
+                BinaryTreeNode *temp = BTN_get_right(father);
+
+                BTN_set_right(father , node);
+
+                // donde pondriamos el resto del arbol, yo decidi ponerlo igual que la letra que se selecciono
+                BTN_set_right(node,temp);
+
+            }
+            else if(location == 'l' || location == 'L'){
+
+                BinaryTreeNode *temp = BTN_get_left(father);
+
+                BTN_set_left(father , node);
+
+                // donde pondriamos el resto del arbol, yo decidi ponerlo igual que la letra que se selecciono
+                BTN_set_left(node,temp);
+            }
+
+            // Error en caso de que no selecciono l o r
+            else{
+                printf("Localizacion de inserccion erronea (debe ser r o l)\n");
+                exit(1);
+            }
+        }
+
+        // No existe el padre, se pone el nodo como raiz, y la raiz de va del lado que puso si l o r
+        else{
+            BinaryTreeNode *temp = tree->root;
+
+            tree->root = node;
+
+            if(location == 'r' || location == 'R'){
+                BTN_set_right(tree->root, temp);
+            }
+            else if(location == 'l' || location == 'L'){
+                BTN_set_left(tree->root, temp);
+            }
+
+            // Error en caso de que no selecciono l o r
+            else{
+                printf("Localizacion de inserccion erronea (debe ser r o l)\n");
+                exit(1);
+            }
+
+        }
+    }
+
+}
