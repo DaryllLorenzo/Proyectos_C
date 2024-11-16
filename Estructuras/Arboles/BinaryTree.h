@@ -25,4 +25,6 @@ void BT_free_leaves(BinaryTreeNode **leaves);
 void BT_insert_node(BinaryTree *tree, BinaryTreeNode *node, char location, BinaryTreeNode *father);
 static int _Find_node(BinaryTree *tree, BinaryTreeNode *node);
 
+void BT_delete_node(BinaryTree *tree, BinaryTreeNode *node);
+
 #endif

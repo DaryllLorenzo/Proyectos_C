@@ -114,6 +114,18 @@ int main(void){
 
 
     // Prueba de insertar
+
+    /*
+                   88
+                 /
+                5
+            /       \
+          4          9
+         / \        / \
+        7  10      12 13
+    */
+
+
     int testinf = 88;
 
     BinaryTreeNode *btn14 = BTN_create(NODE_INT);
@@ -122,6 +134,17 @@ int main(void){
     BT_insert_node(&bt,btn14,'l',NULL);
 
     BT_print_preorder(&bt);
+
+
+    printf("\n\n");
+
+    BT_delete_node(&bt, btn11);
+
+    BT_print_preorder(&bt);
+
+    // recordar una vez eliminados los nodos no volverlos a utilizar ya que se pueden dar comportamientos
+    // inesperados
+
 
     return 0;
 }

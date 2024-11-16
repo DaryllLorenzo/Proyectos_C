@@ -366,21 +366,21 @@ static int _Find_node(BinaryTree *tree, BinaryTreeNode *node){
     }
 
     if (tree->root == node) {
-    return 1; // El nodo es la raíz
-  }
-
-  if (tree->root != NULL) {
-    BinaryTree bt = BT_create(BTN_get_left(tree->root));
-    if (_Find_node(&bt, node) == 1) {
-      return 1; // Nodo encontrado en el subárbol izquierdo
+        return 1; // El nodo es la raíz
     }
-    bt.root = BTN_get_right(tree->root);
-    if (_Find_node(&bt, node) == 1) {
-      return 1; // Nodo encontrado en el subárbol derecho
-    }
-  }
 
-  return 0; // Nodo no encontrado
+    if (tree->root != NULL) {
+        BinaryTree bt = BT_create(BTN_get_left(tree->root));
+        if (_Find_node(&bt, node) == 1) {
+            return 1; // Nodo encontrado en el subárbol izquierdo
+        }
+        bt.root = BTN_get_right(tree->root);
+        if (_Find_node(&bt, node) == 1) {
+            return 1; // Nodo encontrado en el subárbol derecho
+        }
+    }
+
+    return 0; // Nodo no encontrado
 }
 
 /**
@@ -456,5 +456,39 @@ void BT_insert_node(BinaryTree *tree, BinaryTreeNode *node, char location, Binar
 
         }
     }
-
 }
+
+/**
+ * @brief BT_delete_node
+ * @param tree
+ * @param node
+ * Funcion para borrar un nodo del arbol, borra el nodo y toda su descendencia
+ * Una vez ejecutado esto, tener cuidado de no acceder/utilizar un nodo que por resultado de esto
+ * fue liberado de la memoria.
+ */
+void BT_delete_node(BinaryTree *tree, BinaryTreeNode *node){
+
+    if(node != NULL){
+
+        BinaryTreeNode *father = BT_get_father(tree, node); // obtener el padre para eliminar posibles referencias
+
+        //caso de que sea la raiz
+        if(father == NULL){
+            BTN_destroy(node); // eliminar todo el arbol
+            tree = NULL;
+        }
+        // caso de no raiz
+        else{
+            // si el nodo es el hijo izq
+            if(BTN_get_left(father) == node){
+                BTN_set_left(father, NULL); //la referencia al hijo izq a null para evitar comportamientos inesperados y accesos no permitidos
+            }
+            else if(BTN_get_right(father) == node){
+                BTN_set_right(father,NULL);//la referencia al hijo derecho a null para evitar comportamientos inesperados y accesos no permitidos
+            }
+
+            BTN_destroy(node); // ahora si eliminar el nodo y su descendencia
+        }
+    }
+}
+
